@@ -9,6 +9,7 @@
 /* Begin PBXBuildFile section */
 		64DD256D8CFE65D00BB93B5F /* Pods_SwiftyDesignPattern.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2BE9F22D0771CFADABC408D7 /* Pods_SwiftyDesignPattern.framework */; };
 		D0031E802214656100F738F0 /* RepositoryViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0031E7F2214656100F738F0 /* RepositoryViewModel.swift */; };
+		D0031E8322146CCE00F738F0 /* TableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0031E8222146CCE00F738F0 /* TableViewCell.swift */; };
 		D015CC86221431C100DB76C3 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = D015CC85221431C100DB76C3 /* AppDelegate.swift */; };
 		D015CC88221431C100DB76C3 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D015CC87221431C100DB76C3 /* ViewController.swift */; };
 		D015CC8B221431C100DB76C3 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = D015CC89221431C100DB76C3 /* Main.storyboard */; };
@@ -44,6 +45,7 @@
 		465F8F0246E355643D37DD39 /* Pods-SwiftyDesignPattern.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-SwiftyDesignPattern.release.xcconfig"; path = "Pods/Target Support Files/Pods-SwiftyDesignPattern/Pods-SwiftyDesignPattern.release.xcconfig"; sourceTree = "<group>"; };
 		6BEA2A4609F22E94A33EB9D3 /* Pods-SwiftyDesignPattern.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-SwiftyDesignPattern.debug.xcconfig"; path = "Pods/Target Support Files/Pods-SwiftyDesignPattern/Pods-SwiftyDesignPattern.debug.xcconfig"; sourceTree = "<group>"; };
 		D0031E7F2214656100F738F0 /* RepositoryViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RepositoryViewModel.swift; sourceTree = "<group>"; };
+		D0031E8222146CCE00F738F0 /* TableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TableViewCell.swift; sourceTree = "<group>"; };
 		D015CC82221431C100DB76C3 /* SwiftyDesignPattern.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = SwiftyDesignPattern.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		D015CC85221431C100DB76C3 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		D015CC87221431C100DB76C3 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
@@ -105,6 +107,14 @@
 			name = Pods;
 			sourceTree = "<group>";
 		};
+		D0031E8122146CB700F738F0 /* View */ = {
+			isa = PBXGroup;
+			children = (
+				D0031E8222146CCE00F738F0 /* TableViewCell.swift */,
+			);
+			path = View;
+			sourceTree = "<group>";
+		};
 		D015CC79221431C100DB76C3 = {
 			isa = PBXGroup;
 			children = (
@@ -131,6 +141,7 @@
 		D015CC84221431C100DB76C3 /* SwiftyDesignPattern */ = {
 			isa = PBXGroup;
 			children = (
+				D0031E8122146CB700F738F0 /* View */,
 				D015CCB5221433D700DB76C3 /* ViewModel */,
 				D015CCB4221433D000DB76C3 /* Service */,
 				D015CCB3221433CA00DB76C3 /* Model */,
@@ -363,6 +374,7 @@
 				D015CC88221431C100DB76C3 /* ViewController.swift in Sources */,
 				D015CCB92214347400DB76C3 /* Service.swift in Sources */,
 				D0031E802214656100F738F0 /* RepositoryViewModel.swift in Sources */,
+				D0031E8322146CCE00F738F0 /* TableViewCell.swift in Sources */,
 				D015CC86221431C100DB76C3 /* AppDelegate.swift in Sources */,
 				D015CCB7221433F200DB76C3 /* Repository.swift in Sources */,
 			);

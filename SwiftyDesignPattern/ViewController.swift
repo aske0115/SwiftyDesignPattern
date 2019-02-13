@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import WebKit
 
 class ViewController: UIViewController {
 
@@ -16,9 +17,13 @@ class ViewController: UIViewController {
             self.tableView.reloadData()
         }
     }
+    
+    
     override func viewDidLoad() {
         super.viewDidLoad()
-    
+        self.tableView.estimatedRowHeight = 30
+        self.title = "Repository List"
+//        self.webView.frame = self.view.frame
         Service().fetchRepositoryRequest { (response:Result<Repositories>) in
             switch response{
             case .success(let repo):
@@ -49,18 +54,36 @@ extension ViewController:UITableViewDataSource{
 extension ViewController:UITableViewDelegate{
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
     
-        if let cell = tableView.dequeueReusableCell(withIdentifier: "Repositories"){
+        if let cell = tableView.dequeueReusableCell(withIdentifier: "Repositories") as? TableViewCell{
             guard let data = self.viewModel?[indexPath.row] else{ return cell}
-            cell.textLabel?.text = data.gitHubTitle ?? "" + "[ \(data.starCount) ]"
-            cell.detailTextLabel?.text = data.description
+//            cell.textLabel?.text = data.gitHubTitle ?? "" + "[ \(data.starCount) ]"
+//            cell.detailTextLabel?.text = data.description
+            cell.viewModel = data
             return cell
         }else{
-            let cell = UITableViewCell(style: .default, reuseIdentifier: "Repositories")
+            let cell = TableViewCell(style: .subtitle, reuseIdentifier: "Repositories")
             guard let data = self.viewModel?[indexPath.row] else{ return cell}
-            cell.textLabel?.text = data.gitHubTitle ?? "" + "[ \(data.starCount) ]"
-            cell.detailTextLabel?.text = data.description
+            cell.viewModel = data
+//            cell.textLabel?.text = data.gitHubTitle ?? "" + "[ \(data.starCount) ]"
+//            cell.detailTextLabel?.text = data.description
             return cell
         }
         
+    }
+    
+    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+        return UITableView.automaticDimension
+    }
+    
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        guard let data = self.viewModel?[indexPath.row] else{ return }
+        
+        let webView:WKWebView = WKWebView()
+        let vc = UIViewController()
+        vc.view = webView
+        vc.title = data.gitHubTitle
+        webView.load(URLRequest(url: data.url!))
+        self.navigationController?.pushViewController(vc, animated: true)
+       
     }
 }
