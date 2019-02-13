@@ -12,22 +12,21 @@ import WebKit
 class ViewController: UIViewController {
 
     @IBOutlet weak var tableView: UITableView!
-    private var viewModel:[RepositoryViewModel]?{
-        didSet{
+    private var viewModel: [RepositoryViewModel]? {
+        didSet {
             self.tableView.reloadData()
         }
     }
-    
-    
+
     override func viewDidLoad() {
         super.viewDidLoad()
         self.tableView.estimatedRowHeight = 30
         self.title = "Repository List"
-//        self.webView.frame = self.view.frame
-        Service().fetchRepositoryRequest { (response:Result<Repositories>) in
-            switch response{
+
+        Service().fetchRepositoryRequest { (response: Result<Repositories>) in
+            switch response {
             case .success(let repo):
-                self.viewModel = repo.items.map{RepositoryViewModel($0)}
+                self.viewModel = repo.items.map {RepositoryViewModel($0)}
                 print(repo)
             case .error(let error):
                 print(error.localizedDescription)
@@ -37,53 +36,39 @@ class ViewController: UIViewController {
         }
         // Do any additional setup after loading the view, typically from a nib.
     }
-
-
 }
 
-extension ViewController:UITableViewDataSource{
+extension ViewController: UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return self.viewModel?.count ?? 0
     }
-    
     func numberOfSections(in tableView: UITableView) -> Int {
         return 1
     }
 }
 
-extension ViewController:UITableViewDelegate{
+extension ViewController: UITableViewDelegate {
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-    
-        if let cell = tableView.dequeueReusableCell(withIdentifier: "Repositories") as? TableViewCell{
-            guard let data = self.viewModel?[indexPath.row] else{ return cell}
-//            cell.textLabel?.text = data.gitHubTitle ?? "" + "[ \(data.starCount) ]"
-//            cell.detailTextLabel?.text = data.description
+        guard let data = self.viewModel?[indexPath.row] else { return UITableViewCell()}
+        if let cell = tableView.dequeueReusableCell(withIdentifier: "Repositories") as? TableViewCell {
             cell.viewModel = data
             return cell
-        }else{
+        } else {
             let cell = TableViewCell(style: .subtitle, reuseIdentifier: "Repositories")
-            guard let data = self.viewModel?[indexPath.row] else{ return cell}
             cell.viewModel = data
-//            cell.textLabel?.text = data.gitHubTitle ?? "" + "[ \(data.starCount) ]"
-//            cell.detailTextLabel?.text = data.description
             return cell
         }
-        
     }
-    
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         return UITableView.automaticDimension
     }
-    
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        guard let data = self.viewModel?[indexPath.row] else{ return }
-        
-        let webView:WKWebView = WKWebView()
-        let vc = UIViewController()
-        vc.view = webView
-        vc.title = data.gitHubTitle
-        webView.load(URLRequest(url: data.url!))
-        self.navigationController?.pushViewController(vc, animated: true)
-       
+        guard let data = self.viewModel?[indexPath.row] else { return }
+        let webView: WKWebView = WKWebView()
+        let viewController = UIViewController()
+        viewController.view = webView
+        viewController.title = data.gitHubTitle
+        webView.load(URLRequest(url: data.url))
+        self.navigationController?.pushViewController(viewController, animated: true)
     }
 }

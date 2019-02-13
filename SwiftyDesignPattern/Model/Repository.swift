@@ -8,14 +8,12 @@
 
 import Foundation
 
-
 struct Repository: Decodable {
     let fullName: String
     let description: String?
     let starCount: Int
     let forkCount: Int
     let url: String
-    
     enum CodingKeys: String, CodingKey {
         case fullName = "full_name"
         case description = "description"

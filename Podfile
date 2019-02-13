@@ -7,6 +7,7 @@ inhibit_all_warnings!
 
 def app_pods
  pod 'Alamofire'
+ pod 'SwiftLint'
 
 end
 

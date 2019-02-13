@@ -8,21 +8,15 @@
 
 import Foundation
 
-
-class RepositoryViewModel{
-//    private var model:Repository
-
-    var gitHubTitle:String?
-    var starCount:Int = 0
-    var description:String?
-    var url:URL?
-    init(_ model:Repository){
-//        self.model = model
-        
+class RepositoryViewModel {
+    var gitHubTitle: String
+    var starCount: Int = 0
+    var description: String?
+    var url: URL
+    init(_ model: Repository) {
         self.gitHubTitle = model.fullName
         self.starCount = model.starCount
         self.description = model.description
-        self.url = URL(string: model.url)
+        self.url = URL(string: model.url)!
     }
-    
 }
