@@ -43,18 +43,16 @@ struct ServiceSetting: Codable {
 class Service{
     private let url = "https://api.github.com/search/repositories?q=language:swift&sort=stars"
     
-    func fetchRepositoryRequest(completion: @escaping(Result<[Repository]>) -> ())
+    func fetchRepositoryRequest<T:Decodable>(completion: @escaping(Result<T>) -> ())
     {
         
         Alamofire.request(URL(string: url)!).responseData { response in
-//        Alamofire.request(URL(string: url)!).responseData(completionHandler: { response in
             if let json = response.result.value
             {
                 do
                 {
-                    let repositories = try JSONDecoder().decode(Repositories.self, from: json)
-//                    print(repositories.items)
-                    completion(.success(repositories.items))
+                    let repositories = try JSONDecoder().decode(T.self, from: json)
+                    completion(.success(repositories))
                 }catch let error
                 {
                     completion(.error(error))
