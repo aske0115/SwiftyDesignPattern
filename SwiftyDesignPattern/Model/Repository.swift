@@ -33,11 +33,3 @@ struct Repositories: Decodable {
         case items
     }
 }
-
-
-struct Repositories2: Decodable {
-    let items: [Repository]
-    enum CodingKeys: String, CodingKey {
-        case items
-    }
-}

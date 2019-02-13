@@ -19,7 +19,7 @@ class ViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
     
-        Service().fetchRepositoryRequest { (response:Result<Repositories2>) in
+        Service().fetchRepositoryRequest { (response:Result<Repositories>) in
             switch response{
             case .success(let repo):
                 self.viewModel = repo.items.map{RepositoryViewModel($0)}
