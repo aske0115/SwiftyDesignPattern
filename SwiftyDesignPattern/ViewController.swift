@@ -20,7 +20,8 @@ class ViewController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        self.tableView.estimatedRowHeight = 30
+        self.tableView.estimatedRowHeight = 80
+        self.tableView.rowHeight = UITableView.automaticDimension
         self.title = "Repository List"
 
         Service().fetchRepositoryRequest { (response: Result<Repositories>) in
@@ -50,18 +51,18 @@ extension ViewController: UITableViewDataSource {
 extension ViewController: UITableViewDelegate {
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         guard let data = self.viewModel?[indexPath.row] else { return UITableViewCell()}
-        if let cell = tableView.dequeueReusableCell(withIdentifier: "Repositories") as? TableViewCell {
-            cell.viewModel = data
+        if let cell = tableView.dequeueReusableCell(withIdentifier: "Repositories") {
+//            data(c)
+            data.configure(cell)
             return cell
         } else {
-            let cell = TableViewCell(style: .subtitle, reuseIdentifier: "Repositories")
-            cell.viewModel = data
+            let cell = UITableViewCell(style: .subtitle, reuseIdentifier: "Repositories")
+//            cell.viewModel = data
+            data.configure(cell)
             return cell
         }
     }
-    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        return UITableView.automaticDimension
-    }
+
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         guard let data = self.viewModel?[indexPath.row] else { return }
         let webView: WKWebView = WKWebView()

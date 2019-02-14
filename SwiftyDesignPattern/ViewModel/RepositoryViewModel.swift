@@ -7,6 +7,8 @@
 //
 
 import Foundation
+import UIKit
+
 
 class RepositoryViewModel {
     var gitHubTitle: String
@@ -18,5 +20,14 @@ class RepositoryViewModel {
         self.starCount = model.starCount
         self.description = model.description
         self.url = URL(string: model.url)!
+    }
+}
+
+extension RepositoryViewModel{
+    func configure(_ view:UITableViewCell){
+        view.textLabel?.numberOfLines = 0
+        view.detailTextLabel?.numberOfLines = 0
+        view.textLabel?.text = self.gitHubTitle + "\n✪ : \(self.starCount)"
+        view.detailTextLabel?.text = self.description
     }
 }
