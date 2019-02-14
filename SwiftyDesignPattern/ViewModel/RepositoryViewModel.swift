@@ -9,7 +9,6 @@
 import Foundation
 import UIKit
 
-
 class RepositoryViewModel {
     var gitHubTitle: String
     var starCount: Int = 0
@@ -23,8 +22,8 @@ class RepositoryViewModel {
     }
 }
 
-extension RepositoryViewModel{
-    func configure(_ view:UITableViewCell){
+extension RepositoryViewModel {
+    func configure(_ view: UITableViewCell) {
         view.textLabel?.numberOfLines = 0
         view.detailTextLabel?.numberOfLines = 0
         view.textLabel?.text = self.gitHubTitle + "\n✪ : \(self.starCount)"
