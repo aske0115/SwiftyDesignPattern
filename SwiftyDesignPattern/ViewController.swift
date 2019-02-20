@@ -8,6 +8,8 @@
 
 import UIKit
 import WebKit
+import RxSwift
+import RxCocoa
 
 class ViewController: UIViewController {
 
@@ -18,12 +20,30 @@ class ViewController: UIViewController {
         }
     }
 
+    let dispose: DisposeBag = DisposeBag()
     override func viewDidLoad() {
         super.viewDidLoad()
         self.tableView.estimatedRowHeight = 80
         self.tableView.rowHeight = UITableView.automaticDimension
+
         self.title = "Repository List"
 
+        let rightButton = UIBarButtonItem(barButtonSystemItem: .refresh, target: self, action: nil)
+
+        self.navigationItem.rightBarButtonItem = rightButton
+
+        self.navigationItem.rightBarButtonItem!.rx.tap
+            .debug()
+            .subscribe(onNext: { [weak self] (_) in
+                self?.viewModel?.removeAll()
+                self?.requestRepositoryList()
+            })
+            .disposed(by: dispose)
+
+        requestRepositoryList()
+    }
+
+    func requestRepositoryList() {
         Service().fetchRepositoryRequest { (response: Result<Repositories>) in
             switch response {
             case .success(let repo):

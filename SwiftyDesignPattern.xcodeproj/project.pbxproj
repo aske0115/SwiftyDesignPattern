@@ -20,8 +20,6 @@
 		D015CCA6221431C300DB76C3 /* SwiftyDesignPatternUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = D015CCA5221431C300DB76C3 /* SwiftyDesignPatternUITests.swift */; };
 		D015CCB7221433F200DB76C3 /* Repository.swift in Sources */ = {isa = PBXBuildFile; fileRef = D015CCB6221433F200DB76C3 /* Repository.swift */; };
 		D015CCB92214347400DB76C3 /* Service.swift in Sources */ = {isa = PBXBuildFile; fileRef = D015CCB82214347400DB76C3 /* Service.swift */; };
-		D015CCBB2214358A00DB76C3 /* Podfile in Resources */ = {isa = PBXBuildFile; fileRef = D015CCBA2214358700DB76C3 /* Podfile */; };
-		D015CCBC2214358A00DB76C3 /* Podfile in Resources */ = {isa = PBXBuildFile; fileRef = D015CCBA2214358700DB76C3 /* Podfile */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -63,7 +61,6 @@
 		D015CCA7221431C300DB76C3 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		D015CCB6221433F200DB76C3 /* Repository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Repository.swift; sourceTree = "<group>"; };
 		D015CCB82214347400DB76C3 /* Service.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Service.swift; sourceTree = "<group>"; };
-		D015CCBA2214358700DB76C3 /* Podfile */ = {isa = PBXFileReference; explicitFileType = text.script.ruby; fileEncoding = 4; path = Podfile; sourceTree = SOURCE_ROOT; xcLanguageSpecificationIdentifier = xcode.lang.ruby; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -125,7 +122,6 @@
 				D015CC99221431C300DB76C3 /* SwiftyDesignPatternTests */,
 				D015CCA4221431C300DB76C3 /* SwiftyDesignPatternUITests */,
 				D015CC83221431C100DB76C3 /* Products */,
-				D015CCBA2214358700DB76C3 /* Podfile */,
 				8BE0DB42E20DB780C70D3F7A /* Pods */,
 				65483A28448D1613DC3C61CA /* Frameworks */,
 			);
@@ -310,7 +306,6 @@
 				D0031E8622147CBC00F738F0 /* .swiftlint.yml in Resources */,
 				D015CC90221431C200DB76C3 /* LaunchScreen.storyboard in Resources */,
 				D015CC8D221431C200DB76C3 /* Assets.xcassets in Resources */,
-				D015CCBB2214358A00DB76C3 /* Podfile in Resources */,
 				D015CC8B221431C100DB76C3 /* Main.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -319,7 +314,6 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				D015CCBC2214358A00DB76C3 /* Podfile in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -357,16 +351,24 @@
 			files = (
 			);
 			inputPaths = (
-				"${SRCROOT}/Pods/Target Support Files/Pods-SwiftyDesignPattern/Pods-SwiftyDesignPattern-frameworks.sh",
+				"${PODS_ROOT}/Target Support Files/Pods-SwiftyDesignPattern/Pods-SwiftyDesignPattern-frameworks.sh",
 				"${BUILT_PRODUCTS_DIR}/Alamofire/Alamofire.framework",
+				"${BUILT_PRODUCTS_DIR}/RxAlamofire/RxAlamofire.framework",
+				"${BUILT_PRODUCTS_DIR}/RxAtomic/RxAtomic.framework",
+				"${BUILT_PRODUCTS_DIR}/RxCocoa/RxCocoa.framework",
+				"${BUILT_PRODUCTS_DIR}/RxSwift/RxSwift.framework",
 			);
 			name = "[CP] Embed Pods Frameworks";
 			outputPaths = (
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Alamofire.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/RxAlamofire.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/RxAtomic.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/RxCocoa.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/RxSwift.framework",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-SwiftyDesignPattern/Pods-SwiftyDesignPattern-frameworks.sh\"\n";
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-SwiftyDesignPattern/Pods-SwiftyDesignPattern-frameworks.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
 		D0031E8422147BCE00F738F0 /* ShellScript */ = {
