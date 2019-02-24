@@ -8,8 +8,10 @@
 
 import Foundation
 import UIKit
+import RxSwift
 
 class RepositoryViewModel {
+    
     var gitHubTitle: String
     var starCount: Int = 0
     var description: String?

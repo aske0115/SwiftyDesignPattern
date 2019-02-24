@@ -35,8 +35,9 @@ class ViewController: UIViewController {
         self.navigationItem.rightBarButtonItem!.rx.tap
             .debug()
             .subscribe(onNext: { [weak self] (_) in
-                self?.viewModel?.removeAll()
-                self?.requestRepositoryList()
+                guard let `self` = self else { return }
+                self.viewModel?.removeAll()
+                self.requestRepositoryList()
             })
             .disposed(by: dispose)
 
