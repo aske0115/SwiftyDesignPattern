@@ -90,6 +90,8 @@ extension ViewController: UITableViewDelegate {
         viewController.title = data.gitHubTitle
 
         webView.load(URLRequest(url: data.url))
+        
+        print("didSelectedRow")
 
         self.navigationController?.pushViewController(viewController, animated: true)
     }
