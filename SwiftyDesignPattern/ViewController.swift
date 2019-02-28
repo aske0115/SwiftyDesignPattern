@@ -91,7 +91,7 @@ extension ViewController: UITableViewDelegate {
 
         webView.load(URLRequest(url: data.url))
         
-        print("didSelectedRow")
+        print("didSelectedRow  ")
 
         self.navigationController?.pushViewController(viewController, animated: true)
     }
