@@ -45,7 +45,8 @@ class ViewController: UIViewController {
     }
 
     func requestRepositoryList() {
-        Service().fetchRepositoryRequest { (response: Result<Repositories>) in
+
+        Service().fetchRepositoryRequest(service: ServiceSetting()){ (response: Result<Repositories>) in
             switch response {
             case .success(let repo):
                 self.viewModel = repo.items.map {RepositoryViewModel($0)}

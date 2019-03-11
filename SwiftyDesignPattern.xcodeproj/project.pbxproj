@@ -351,7 +351,7 @@
 			files = (
 			);
 			inputPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-SwiftyDesignPattern/Pods-SwiftyDesignPattern-frameworks.sh",
+				"${SRCROOT}/Pods/Target Support Files/Pods-SwiftyDesignPattern/Pods-SwiftyDesignPattern-frameworks.sh",
 				"${BUILT_PRODUCTS_DIR}/Alamofire/Alamofire.framework",
 				"${BUILT_PRODUCTS_DIR}/RxAlamofire/RxAlamofire.framework",
 				"${BUILT_PRODUCTS_DIR}/RxAtomic/RxAtomic.framework",
@@ -368,7 +368,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-SwiftyDesignPattern/Pods-SwiftyDesignPattern-frameworks.sh\"\n";
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-SwiftyDesignPattern/Pods-SwiftyDesignPattern-frameworks.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
 		D0031E8422147BCE00F738F0 /* ShellScript */ = {

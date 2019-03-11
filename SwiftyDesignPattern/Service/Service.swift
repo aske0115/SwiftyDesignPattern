@@ -22,15 +22,15 @@ enum ServiceError: Error {
 
 struct ServiceSetting: Codable {
     var language = Language.swift
-    var userID   = UserID.all
+    var userID   = UserID.aske0115
     var sortType = SortType.stars
     enum Language: String, Codable {
         case swift, objc, java, kotlin, python
         static let allValues: [Language] = [.swift, .objc, .java, .kotlin, .python]
     }
     enum UserID: String, Codable {
-        case all, giftbott
-        static let allValues: [UserID] = [.all, .giftbott]
+        case all, aske0115
+        static let allValues: [UserID] = [.all, .aske0115]
     }
     enum SortType: String, Codable {
         case stars, forks, updated
@@ -39,8 +39,8 @@ struct ServiceSetting: Codable {
 }
 
 class Service {
-    private let url = "https://api.github.com/search/repositories?q=language:swift&sort=stars"
-    func fetchRepositoryRequest<T: Decodable>(completion: @escaping(Result<T>) -> Void) {
+    func fetchRepositoryRequest<T: Decodable>(service:ServiceSetting, completion: @escaping(Result<T>) -> Void) {
+        let url = "https://api.github.com/search/repositories?q=language:\(service.language.rawValue)+user:\(service.userID.rawValue)&sort=\(service.sortType.rawValue)"
         Alamofire.request(URL(string: url)!).responseData { response in
             if let json = response.result.value {
                 do {
