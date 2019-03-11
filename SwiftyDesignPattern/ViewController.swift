@@ -46,7 +46,7 @@ class ViewController: UIViewController {
 
     func requestRepositoryList() {
 
-        Service().fetchRepositoryRequest(service: ServiceSetting()){ (response: Result<Repositories>) in
+        Service().fetchRepositoryRequest(service: ServiceSetting()) {(response: Result<Repositories>) in
             switch response {
             case .success(let repo):
                 self.viewModel = repo.items.map {RepositoryViewModel($0)}
@@ -91,7 +91,6 @@ extension ViewController: UITableViewDelegate {
         viewController.title = data.gitHubTitle
 
         webView.load(URLRequest(url: data.url))
-        
         print("didSelectedRow  ")
 
         self.navigationController?.pushViewController(viewController, animated: true)

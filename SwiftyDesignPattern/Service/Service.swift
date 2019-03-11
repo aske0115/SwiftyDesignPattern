@@ -39,7 +39,7 @@ struct ServiceSetting: Codable {
 }
 
 class Service {
-    func fetchRepositoryRequest<T: Decodable>(service:ServiceSetting, completion: @escaping(Result<T>) -> Void) {
+    func fetchRepositoryRequest<T: Decodable>(service: ServiceSetting, completion: @escaping(Result<T>) -> Void) {
         let url = "https://api.github.com/search/repositories?q=language:\(service.language.rawValue)+user:\(service.userID.rawValue)&sort=\(service.sortType.rawValue)"
         Alamofire.request(URL(string: url)!).responseData { response in
             if let json = response.result.value {

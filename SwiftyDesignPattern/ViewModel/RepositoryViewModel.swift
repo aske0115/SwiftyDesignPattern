@@ -11,10 +11,7 @@ import UIKit
 import RxSwift
 import RxCocoa
 
-
 class RepositoryViewModel {
-    
-    
 //    var viewWillAppear:PublishBehavior<T>
     var gitHubTitle: String
     var starCount: Int = 0
