@@ -21,17 +21,10 @@ class ViewController: UIViewController {
     }
 
     let dispose: DisposeBag = DisposeBag()
+
     override func viewDidLoad() {
         super.viewDidLoad()
-        self.tableView.estimatedRowHeight = 80
-        self.tableView.rowHeight = UITableView.automaticDimension
-
-        self.title = "Repository List"
-
-        let rightButton = UIBarButtonItem(barButtonSystemItem: .refresh, target: self, action: nil)
-
-        self.navigationItem.rightBarButtonItem = rightButton
-
+        setupUI()
         self.navigationItem.rightBarButtonItem!.rx.tap
             .debug()
             .subscribe(onNext: { [weak self] (_) in
@@ -44,19 +37,32 @@ class ViewController: UIViewController {
         requestRepositoryList()
     }
 
+    func setupUI() {
+        self.tableView.estimatedRowHeight = 80
+        self.tableView.rowHeight = UITableView.automaticDimension
+
+        self.title = "Repository List"
+
+        let rightButton = UIBarButtonItem(barButtonSystemItem: .refresh, target: self, action: nil)
+
+        self.navigationItem.rightBarButtonItem = rightButton
+    }
+
     func requestRepositoryList() {
 
-        Service().fetchRepositoryRequest(service: ServiceSetting()) {(response: Result<Repositories>) in
-            switch response {
-            case .success(let repo):
-                self.viewModel = repo.items.map {RepositoryViewModel($0)}
-                print(repo)
-            case .error(let error):
-                print(error.localizedDescription)
-            case .errorWithMessage(let message):
-                print(message)
-            }
-        }
+        Service().fetchRepository(service: ServiceSetting())
+            .observeOn(MainScheduler.instance)
+            .subscribe(onNext: { (response: Result<Repositories>) in
+                switch response {
+                case .success(let repo):
+                    self.viewModel = repo.items.map {RepositoryViewModel($0)}
+                case .error(let error):
+                    print(error.localizedDescription)
+                case .errorWithMessage(let message):
+                    print(message)
+                }
+            })
+        .disposed(by: dispose)
     }
 }
 

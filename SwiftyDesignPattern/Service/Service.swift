@@ -8,6 +8,8 @@
 
 import Foundation
 import Alamofire
+import RxCocoa
+import RxSwift
 
 enum Result<T> {
     case success(T)
@@ -39,6 +41,34 @@ struct ServiceSetting: Codable {
 }
 
 class Service {
+
+    private let session: URLSession
+
+    init(session: URLSession = URLSession.shared) {
+        self.session = session
+    }
+
+    func fetchRepository<T: Decodable>(service: ServiceSetting) -> Observable<Result<T>> {
+        let url = "https://api.github.com/search/repositories?q=language:\(service.language.rawValue)+user:\(service.userID.rawValue)&sort=\(service.sortType.rawValue)"
+        return session.rx
+            .json(url: URL(string: url)!)
+            .flatMap { json throws -> Observable<Result<T>> in
+                if let json = json as? [String: Any] {
+
+                    let response = try JSONSerialization.data(withJSONObject: json, options: .prettyPrinted)
+                    do {
+                        let repo = try JSONDecoder().decode(T.self, from: response)
+                        return Observable.just(Result<T>.success(repo))
+                    } catch let error {
+                        return Observable.just(Result<T>.error(error))
+                    }
+                } else {
+                    return Observable.just(Result<T>.errorWithMessage("파싱할 수 없어!"))
+                }
+
+        }
+    }
+
     func fetchRepositoryRequest<T: Decodable>(service: ServiceSetting, completion: @escaping(Result<T>) -> Void) {
         let url = "https://api.github.com/search/repositories?q=language:\(service.language.rawValue)+user:\(service.userID.rawValue)&sort=\(service.sortType.rawValue)"
         Alamofire.request(URL(string: url)!).responseData { response in
