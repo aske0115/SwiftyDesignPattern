@@ -50,19 +50,26 @@ class ViewController: UIViewController {
 
     func requestRepositoryList() {
 
-        Service().fetchRepository(service: ServiceSetting())
-            .observeOn(MainScheduler.instance)
-            .subscribe(onNext: { (response: Result<Repositories>) in
-                switch response {
-                case .success(let repo):
-                    self.viewModel = repo.items.map {RepositoryViewModel($0)}
-                case .error(let error):
-                    print(error.localizedDescription)
-                case .errorWithMessage(let message):
-                    print(message)
-                }
+        Service().fetchRepository2(service: ServiceSetting())
+            .drive(onNext: { model in
+                self.viewModel = model.map { RepositoryViewModel($0) }
             })
         .disposed(by: dispose)
+        
+        
+//        Service().fetchRepository(service: ServiceSetting())
+//            .observeOn(MainScheduler.instance)
+//            .subscribe(onNext: { (response: Result<Repositories>) in
+//                switch response {
+//                case .success(let repo):
+//                    self.viewModel = repo.items.map {RepositoryViewModel($0)}
+//                case .error(let error):
+//                    print(error.localizedDescription)
+//                case .errorWithMessage(let message):
+//                    print(message)
+//                }
+//            })
+//        .disposed(by: dispose)
     }
 }
 

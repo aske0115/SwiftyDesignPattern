@@ -48,6 +48,29 @@ class Service {
         self.session = session
     }
 
+    func fetchRepository2(service: ServiceSetting) -> Driver<[Repository]> {
+        let url = "https://api.github.com/search/repositories?q=language:\(service.language.rawValue)+user:\(service.userID.rawValue)&sort=\(service.sortType.rawValue)"
+        return Observable.create { emit in
+            Alamofire.request(URL(string: url)!).responseJSON(completionHandler: { response in
+                switch response.result {
+                case .success(let value):
+                        do {
+                            let response = try JSONSerialization.data(withJSONObject: value, options: .prettyPrinted)
+                            let data = try JSONDecoder().decode(Repositories.self, from: response)
+                            emit.onNext(data.items)
+                            emit.onCompleted()
+                        } catch let error {
+                            emit.onError(error)
+                        }
+                case .failure(let error):
+                        emit.onError(error)
+                }
+            })
+            return Disposables.create()
+        }.asDriver(onErrorJustReturn: [])
+    }
+    
+    
     func fetchRepository<T: Decodable>(service: ServiceSetting) -> Observable<Result<T>> {
         let url = "https://api.github.com/search/repositories?q=language:\(service.language.rawValue)+user:\(service.userID.rawValue)&sort=\(service.sortType.rawValue)"
         return session.rx
