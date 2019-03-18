@@ -14,27 +14,21 @@ import RxCocoa
 class ViewController: UIViewController {
 
     @IBOutlet weak var tableView: UITableView!
-    private var viewModel: [RepositoryViewModel]? {
+    private var viewModel: [RepositoryItemViewModel]? {
         didSet {
             self.tableView.reloadData()
         }
     }
 
+    private var viewModel2: RepositoryViewModel!
+
     let dispose: DisposeBag = DisposeBag()
 
     override func viewDidLoad() {
         super.viewDidLoad()
+        self.viewModel2 = RepositoryViewModel()
         setupUI()
-        self.navigationItem.rightBarButtonItem!.rx.tap
-            .debug()
-            .subscribe(onNext: { [weak self] (_) in
-                guard let `self` = self else { return }
-                self.viewModel?.removeAll()
-                self.requestRepositoryList()
-            })
-            .disposed(by: dispose)
-
-        requestRepositoryList()
+        bind()
     }
 
     func setupUI() {
@@ -44,32 +38,22 @@ class ViewController: UIViewController {
         self.title = "Repository List"
 
         let rightButton = UIBarButtonItem(barButtonSystemItem: .refresh, target: self, action: nil)
-
         self.navigationItem.rightBarButtonItem = rightButton
     }
 
-    func requestRepositoryList() {
+    func bind() {
 
-        Service().fetchRepository2(service: ServiceSetting())
-            .drive(onNext: { model in
-                self.viewModel = model.map { RepositoryViewModel($0) }
-            })
+        let viewWillAppear = rx.sentMessage(#selector(UIViewController.viewWillAppear(_: ))).map { _ in }
+            .asDriver(onErrorJustReturn: ())
+        let tapRightButton = self.navigationItem.rightBarButtonItem!.rx.tap.asDriver()
+
+        let input = RepositoryViewModel.Input(viewWillAppear: viewWillAppear, didPressRefreshButton: tapRightButton)
+        let output = viewModel2.transfer(input)
+
+        output.showRepositoryList.drive(onNext: { repository in
+            self.viewModel = repository.map {RepositoryItemViewModel($0)}
+        })
         .disposed(by: dispose)
-        
-        
-//        Service().fetchRepository(service: ServiceSetting())
-//            .observeOn(MainScheduler.instance)
-//            .subscribe(onNext: { (response: Result<Repositories>) in
-//                switch response {
-//                case .success(let repo):
-//                    self.viewModel = repo.items.map {RepositoryViewModel($0)}
-//                case .error(let error):
-//                    print(error.localizedDescription)
-//                case .errorWithMessage(let message):
-//                    print(message)
-//                }
-//            })
-//        .disposed(by: dispose)
     }
 }
 
